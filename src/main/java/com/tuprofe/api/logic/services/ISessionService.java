@@ -13,5 +13,5 @@ import com.tuprofe.api.entities.Teacher;
  */
 public interface ISessionService {
     
-    public void signUpTeacher(Teacher teacher);
+    public Teacher signUpTeacher(Teacher teacher);
 }

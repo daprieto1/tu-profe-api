@@ -10,6 +10,12 @@ package com.tuprofe.api.logic;
  * @author diegoprietotorres
  */
 public interface CRUD<T, PK> {
-
-    public void create(T entity);
+    
+    public T create(T entity);
+    
+    public T find(PK id);
+    
+    public T update(T entity);
+    
+    public void delete(T entity);
 }

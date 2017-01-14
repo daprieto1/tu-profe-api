@@ -1,0 +1,29 @@
+package com.tuprofe.api.resources;
+
+import com.tuprofe.api.entities.Teacher;
+import com.tuprofe.api.entities.User;
+import com.tuprofe.api.logic.services.ISessionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ *
+ * @author diegoprietotorres
+ */
+@RestController
+@RequestMapping("/session")
+public class SessionResource {
+
+    @Autowired
+    @Qualifier("SessionService")
+    private ISessionService sessionService;
+
+    @RequestMapping(value = "/signup-teacher", method = RequestMethod.POST, produces = "application/json")
+    public User signup(@RequestBody Teacher teacher) {
+        return sessionService.signUpTeacher(teacher);
+    }
+}

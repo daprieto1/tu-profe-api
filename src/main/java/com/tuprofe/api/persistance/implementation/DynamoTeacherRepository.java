@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Qualifier("DynamoTeacherRepository")
-public class DynamoTeacherRepository extends DAODynamo<Teacher, Integer> implements ITeacherRepository {
+public class DynamoTeacherRepository extends DAODynamo<Teacher, String> implements ITeacherRepository {
 
     public DynamoTeacherRepository() {
         super(Teacher.class);

@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tuprofe.api.persistance.engine;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.SaveBehavior;
 import com.tuprofe.api.persistance.DAO;
 import java.io.Serializable;
 import java.util.List;
@@ -39,24 +35,29 @@ public class DAODynamo<T extends Serializable, PK> implements DAO<T, PK> {
 
     @Override
     public T find(PK id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDB);
+        T t = mapper.load(baseClass, id);
+        return t;
     }
 
     @Override
     public T save(T entity) {
         DynamoDBMapper mapper = new DynamoDBMapper(dynamoDB);
         mapper.save(entity);
-        return null;
+        return entity;
     }
 
     @Override
-    public void update(PK id, String field, Object value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public T update(PK id, T entity) {
+        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDB);        
+        mapper.save(entity, SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES.config());
+        return entity;
     }
 
     @Override
     public void delete(T entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDB);
+        mapper.delete(entity);
     }
 
     protected AmazonDynamoDB getDynamoDB() {

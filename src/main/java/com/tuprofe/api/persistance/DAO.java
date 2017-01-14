@@ -20,7 +20,7 @@ public interface DAO<T extends Serializable, PK> {
 
     public T save(T entity);
 
-    public void update(PK id, String field, Object value);
+    public T update(PK id, T entity);
 
     public void delete(T entity);
 }

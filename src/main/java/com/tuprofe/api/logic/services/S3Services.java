@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tuprofe.api.persistance.repositories;
-
-import com.tuprofe.api.entities.Teacher;
-import com.tuprofe.api.persistance.DAO;
+package com.tuprofe.api.logic.services;
 
 /**
  *
  * @author diegoprietotorres
  */
-public interface ITeacherRepository extends DAO<Teacher, String> {
-
+public interface S3Services {
+    
 }
