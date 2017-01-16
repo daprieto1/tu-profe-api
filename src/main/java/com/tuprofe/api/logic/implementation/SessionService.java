@@ -7,6 +7,7 @@ package com.tuprofe.api.logic.implementation;
 
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.entities.User;
+import com.tuprofe.api.entities.enums.EnumTeacherState;
 import com.tuprofe.api.logic.services.ISessionService;
 import com.tuprofe.api.logic.services.ITeacherServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ public class SessionService implements ISessionService {
 
     @Override
     public Teacher signUpTeacher(Teacher teacher) {
-        signUpProcess(teacher);
+        signUpProcess(teacher);        
+        teacher.setState(EnumTeacherState.SIGN_UP);
         return teacherServices.create(teacher);
     }
 

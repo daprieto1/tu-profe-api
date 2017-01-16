@@ -5,6 +5,7 @@ import com.tuprofe.api.logic.services.ISessionService;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.junit.After;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -57,6 +58,7 @@ public class TestSessionService {
             assertNotNull("The teacher 2 must not be null", teacher2);
             assertTrue("The teacher name must be equal", teacher1.getId().equals(teacher2.getId()));
             assertTrue("The password must be encrypted", bCryptPasswordEncoder.matches(TestTeacherService.TEACHER_PASSWORD, teacher2.getPassword()));
+            assertTrue("The teacher state must be signUp", Objects.equals(teacher2.getState(), teacher1.getState()));
         } catch (Exception e) {
             System.err.println(e.getCause() + " - " + e.getMessage());
             String fail = "FAIL = testSignUpTeacher : " + e.getMessage();

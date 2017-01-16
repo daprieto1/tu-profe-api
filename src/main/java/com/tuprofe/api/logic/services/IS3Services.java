@@ -5,10 +5,14 @@
  */
 package com.tuprofe.api.logic.services;
 
+import java.io.IOException;
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  *
  * @author diegoprietotorres
  */
-public interface S3Services {
+public interface IS3Services {
     
+    public void uploadFile(MultipartFile input, String bucketName, String key) throws IOException;
 }

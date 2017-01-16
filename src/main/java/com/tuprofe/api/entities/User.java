@@ -5,6 +5,7 @@
  */
 package com.tuprofe.api.entities;
 
+import com.tuprofe.api.entities.enums.EnumTeacherState;
 import java.io.Serializable;
 
 /**
@@ -15,6 +16,7 @@ public abstract class User implements Serializable {
 
     //Account Data
     protected String id;
+    protected Integer state;
     protected String name;
     protected String lastName;
     protected String email;
@@ -37,6 +39,18 @@ public abstract class User implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+    
+    public void setState(EnumTeacherState state) {
+        this.state = state.getId();
     }
 
     public String getName() {

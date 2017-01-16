@@ -38,6 +38,9 @@ public class Teacher extends User implements Serializable {
     private String bank;
     private String accountNumber;
     private String accountType;
+    
+    //Schedule
+    private String schedule;
 
     public Teacher() {
         super();
@@ -58,6 +61,12 @@ public class Teacher extends User implements Serializable {
     @Override
     public String getName() {
         return name;
+    }
+    
+    @DynamoDBAttribute(attributeName = "state")
+    @Override
+    public Integer getState() {
+        return state;
     }
 
     @DynamoDBAttribute(attributeName = "lastName")
@@ -202,6 +211,15 @@ public class Teacher extends User implements Serializable {
 
     public void setAccountType(String accountType) {
         this.accountType = accountType;
+    }
+    
+    @DynamoDBAttribute(attributeName = "schedule")
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
     }
 
 }

@@ -1,10 +1,13 @@
 package com.tuprofe.api.resources;
 
-import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.logic.services.ITeacherServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,19 +38,11 @@ public class TeacherResource {
         return teacherServices.update(teacher);
     }
 
+    @ExceptionHandler(TuProfeAPIException.class)
     @RequestMapping(value = "/upload-curriculum", method = RequestMethod.POST)
-    public String uploadCurriculum(@RequestParam("name") String name,
+    public ResponseEntity<?> uploadCurriculum(@RequestParam("teacherId") String teacherId,
             @RequestParam("file") MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
-                teacherServices.uploadCurriculum(file);
-
-                return "You successfully uploaded " + name + "!";
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload " + name + " because the file was empty.";
-        }
+        teacherServices.uploadCurriculum(file, teacherId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

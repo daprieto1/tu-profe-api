@@ -1,6 +1,8 @@
 package com.tuprofe.logic;
 
+import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.Teacher;
+import com.tuprofe.api.entities.enums.EnumTeacherState;
 import com.tuprofe.api.logic.services.ITeacherServices;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class TestTeacherService {
     public void testCreate() {
         try {
             Teacher teacher1 = TestTeacherService.createTeacherTemplate();
+            teacher1.setState(EnumTeacherState.SIGN_UP);
             teacher1 = teacherServices.create(teacher1);
             teachers.add(teacher1);
 
@@ -74,9 +77,22 @@ public class TestTeacherService {
     }
 
     @Test
+    public void testCreateBadState() {
+        try {
+            Teacher teacher1 = TestTeacherService.createTeacherTemplate();
+            teacher1 = teacherServices.create(teacher1);
+            teachers.add(teacher1);
+            fail("Exception must be raised");
+        } catch (Exception e) {
+            assertTrue("The instance of the exception must be correct", e instanceof TuProfeAPIException);
+        }
+    }
+
+    @Test
     public void testUpdate() {
         try {
             Teacher teacher1 = TestTeacherService.createTeacherTemplate();
+            teacher1.setState(EnumTeacherState.SIGN_UP);
             teacher1 = teacherServices.create(teacher1);
             teachers.add(teacher1);
 
