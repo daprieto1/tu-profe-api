@@ -11,4 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ITeacherServices extends CRUD<Teacher, String> {
     
     public void uploadCurriculum(MultipartFile file, String teacherId);
+    
+    public void uploadPhoto(MultipartFile file, String teacherId);
 }

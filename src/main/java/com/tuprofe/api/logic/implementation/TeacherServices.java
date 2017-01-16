@@ -1,10 +1,5 @@
 package com.tuprofe.api.logic.implementation;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.AccessControlList;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.entities.enums.EnumTeacherState;
@@ -12,8 +7,6 @@ import com.tuprofe.api.logic.services.IS3Services;
 import com.tuprofe.api.logic.services.ITeacherServices;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +28,9 @@ public class TeacherServices implements ITeacherServices {
 
     @Value("${amazon.s3.tuprofe.teacher.curriculum}")
     private String curriculumBucket;
+    
+    @Value("${amazon.s3.tuprofe.teacher.photo}")
+    private String photoBucket;
 
     @Autowired
     @Qualifier("DynamoTeacherRepository")
@@ -95,6 +91,17 @@ public class TeacherServices implements ITeacherServices {
             throw new TuProfeAPIException(ex.getMessage(), ex.getCause());
         }
 
+    }
+
+    @Override
+    public void uploadPhoto(MultipartFile file, String teacherId) {
+        try {
+            Teacher teacher = this.find(teacherId);
+            String key = teacher.getId() + ".jpg";
+            s3Services.uploadFile(file, photoBucket, key);
+        } catch (IOException ex) {
+            throw new TuProfeAPIException(ex.getMessage(), ex.getCause());
+        }
     }
 
 }

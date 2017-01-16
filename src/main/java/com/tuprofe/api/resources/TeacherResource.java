@@ -45,4 +45,12 @@ public class TeacherResource {
         teacherServices.uploadCurriculum(file, teacherId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    @ExceptionHandler(TuProfeAPIException.class)
+    @RequestMapping(value = "/upload-photo", method = RequestMethod.POST)
+    public ResponseEntity<?> uploadPhoto(@RequestParam("teacherId") String teacherId,
+            @RequestParam("file") MultipartFile file) {
+        teacherServices.uploadPhoto(file, teacherId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
