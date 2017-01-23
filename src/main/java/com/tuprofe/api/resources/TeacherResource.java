@@ -33,20 +33,18 @@ public class TeacherResource {
         return teacherServices.find(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, produces = {"application/json"}, consumes = {"application/json"})
     public Teacher update(@RequestBody Teacher teacher) {
         return teacherServices.update(teacher);
     }
 
-    @ExceptionHandler(TuProfeAPIException.class)
     @RequestMapping(value = "/upload-curriculum", method = RequestMethod.POST)
     public ResponseEntity<?> uploadCurriculum(@RequestParam("teacherId") String teacherId,
             @RequestParam("file") MultipartFile file) {
         teacherServices.uploadCurriculum(file, teacherId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
-    @ExceptionHandler(TuProfeAPIException.class)
+
     @RequestMapping(value = "/upload-photo", method = RequestMethod.POST)
     public ResponseEntity<?> uploadPhoto(@RequestParam("teacherId") String teacherId,
             @RequestParam("file") MultipartFile file) {

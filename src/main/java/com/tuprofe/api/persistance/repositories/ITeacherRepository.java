@@ -13,5 +13,7 @@ import com.tuprofe.api.persistance.DAO;
  * @author diegoprietotorres
  */
 public interface ITeacherRepository extends DAO<Teacher, String> {
-
+        
+    public Teacher findByEmail(String email);
+    
 }

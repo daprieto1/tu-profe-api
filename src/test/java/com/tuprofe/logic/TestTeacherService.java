@@ -59,7 +59,7 @@ public class TestTeacherService {
     public void testCreate() {
         try {
             Teacher teacher1 = TestTeacherService.createTeacherTemplate();
-            teacher1.setState(EnumTeacherState.SIGN_UP);
+            teacher1.setState(EnumTeacherState.SIGN_UP.getId());
             teacher1 = teacherServices.create(teacher1);
             teachers.add(teacher1);
 
@@ -92,7 +92,7 @@ public class TestTeacherService {
     public void testUpdate() {
         try {
             Teacher teacher1 = TestTeacherService.createTeacherTemplate();
-            teacher1.setState(EnumTeacherState.SIGN_UP);
+            teacher1.setState(EnumTeacherState.SIGN_UP.getId());
             teacher1 = teacherServices.create(teacher1);
             teachers.add(teacher1);
 

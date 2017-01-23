@@ -18,6 +18,10 @@ public class TuProfeAPIException extends RuntimeException {
     //Persistance Exceptions
     public static final String NOT_FIND_ENTITY = "The entity does not exists.";
     
+    //Authenticate exceptions
+    public static final String BAD_CREDENTIALS = "The provided credentials are bad";
+    public static final String BAD_ACCESS_TOKEN = "The provided access token is not valid";
+    
     //Logic Exceptions
     public static final String NOT_VALID_PARAMETER = "The given parameter is not valid.";   
     

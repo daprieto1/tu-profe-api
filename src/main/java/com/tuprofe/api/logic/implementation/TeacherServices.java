@@ -28,7 +28,7 @@ public class TeacherServices implements ITeacherServices {
 
     @Value("${amazon.s3.tuprofe.teacher.curriculum}")
     private String curriculumBucket;
-    
+
     @Value("${amazon.s3.tuprofe.teacher.photo}")
     private String photoBucket;
 
@@ -60,10 +60,16 @@ public class TeacherServices implements ITeacherServices {
 
     @Override
     public Teacher find(String id) {
+        if (id == null || "".equals(id)) {
+            throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
+        }
+
         Teacher teacher = teacherRepository.find(id);
+
         if (teacher == null) {
             throw new TuProfeAPIException(TuProfeAPIException.NOT_FIND_ENTITY);
         }
+
         return teacher;
     }
 
@@ -80,12 +86,27 @@ public class TeacherServices implements ITeacherServices {
     }
 
     @Override
+    public Teacher findByEmail(String email) {
+        if (email == null || "".equals(email)) {
+            throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
+        }
+
+        Teacher teacher = teacherRepository.findByEmail(email);
+
+        if (teacher == null) {
+            throw new TuProfeAPIException(TuProfeAPIException.NOT_FIND_ENTITY);
+        }
+
+        return teacher;
+    }
+
+    @Override
     public void uploadCurriculum(MultipartFile file, String teacherId) {
         try {
             Teacher teacher = this.find(teacherId);
             String key = teacher.getId() + ".docx";
             s3Services.uploadFile(file, curriculumBucket, key);
-            teacher.setState(EnumTeacherState.CURRICULUM);
+            teacher.setState(EnumTeacherState.CURRICULUM.getId());
             this.update(teacher);
         } catch (IOException ex) {
             throw new TuProfeAPIException(ex.getMessage(), ex.getCause());

@@ -38,7 +38,7 @@ public class Teacher extends User implements Serializable {
     private String bank;
     private String accountNumber;
     private String accountType;
-    
+
     //Schedule
     private String schedule;
 
@@ -62,7 +62,7 @@ public class Teacher extends User implements Serializable {
     public String getName() {
         return name;
     }
-    
+
     @DynamoDBAttribute(attributeName = "state")
     @Override
     public Integer getState() {
@@ -212,7 +212,7 @@ public class Teacher extends User implements Serializable {
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
-    
+
     @DynamoDBAttribute(attributeName = "schedule")
     public String getSchedule() {
         return schedule;
