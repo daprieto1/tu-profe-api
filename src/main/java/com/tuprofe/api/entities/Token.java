@@ -13,11 +13,13 @@ public class Token {
 
     private String token;
     private String username;
+    private String userId;
     private Integer expirationTime;
 
-    public Token(String token, String username, Integer expirationTime) {
+    public Token(String token, String username, String userId, Integer expirationTime) {
         this.token = token;
         this.username = username;
+        this.userId = userId;
         this.expirationTime = expirationTime;
     }
 
@@ -35,6 +37,14 @@ public class Token {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Integer getExpirationTime() {

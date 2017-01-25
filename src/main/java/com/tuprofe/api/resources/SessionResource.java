@@ -43,7 +43,7 @@ public class SessionResource {
     public User signupTeacher(@RequestBody Teacher teacher) {
         return sessionService.signUpTeacher(teacher);
     }
-    
+
     @RequestMapping(value = "/teacher", method = RequestMethod.GET, produces = "application/json")
     public Teacher getAuthenticatedTeacher() {
         String token = request.getHeader(AUTH_HEADER_TOKEN);

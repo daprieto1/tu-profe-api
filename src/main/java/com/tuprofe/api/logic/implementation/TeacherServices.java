@@ -46,6 +46,8 @@ public class TeacherServices implements ITeacherServices {
             throw new TuProfeAPIException(TuProfeAPIException.NULL_PARAM);
         } else if (teacher.getState() == null) {
             throw new TuProfeAPIException(TuProfeAPIException.BAD_TEACHER_STATE);
+        } else if (teacherRepository.findByEmail(teacher.getEmail()) != null) {
+            throw new TuProfeAPIException(TuProfeAPIException.TEACHER_ALREADY_EXISTS);
         }
 
         int numberSessions = DAYS * SECTIONS * 2;

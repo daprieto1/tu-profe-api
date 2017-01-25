@@ -58,6 +58,12 @@
             <artifactId>aws-java-sdk-s3</artifactId>
             <version>1.11.78</version>
         </dependency>
+        <!-- SQS -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-sqs</artifactId>
+            <version>1.11.83</version>
+        </dependency>
         <!-- SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
