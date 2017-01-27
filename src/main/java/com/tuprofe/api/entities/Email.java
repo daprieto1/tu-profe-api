@@ -4,13 +4,14 @@ package com.tuprofe.api.entities;
  *
  * @author diego
  */
-public class EmailSQS {
+public class Email {
 
     private String to;
+    private String from;
     private String subject;
     private String body;
 
-    public EmailSQS() {
+    public Email() {
     }
 
     public String getTo() {
@@ -19,6 +20,14 @@ public class EmailSQS {
 
     public void setTo(String to) {
         this.to = to;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 
     public String getSubject() {

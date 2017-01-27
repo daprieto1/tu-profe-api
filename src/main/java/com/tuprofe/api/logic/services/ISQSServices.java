@@ -5,7 +5,7 @@
  */
 package com.tuprofe.api.logic.services;
 
-import com.tuprofe.api.entities.EmailSQS;
+import com.tuprofe.api.entities.Email;
 
 /**
  *
@@ -13,5 +13,5 @@ import com.tuprofe.api.entities.EmailSQS;
  */
 public interface ISQSServices {
 
-    public void send(EmailSQS email);
+    public void send(Email email);
 }

@@ -1,11 +1,12 @@
 package com.tuprofe.api.logic.implementation;
 
 import com.tuprofe.api.TuProfeAPIException;
-import com.tuprofe.api.entities.EmailSQS;
+import com.tuprofe.api.entities.Email;
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.entities.Token;
 import com.tuprofe.api.entities.User;
 import com.tuprofe.api.entities.enums.EnumTeacherState;
+import com.tuprofe.api.logic.services.IEmailServices;
 import com.tuprofe.api.logic.services.ISQSServices;
 import com.tuprofe.api.logic.services.ISessionService;
 import com.tuprofe.api.logic.services.ITeacherServices;
@@ -26,14 +27,17 @@ import org.springframework.stereotype.Service;
 public class SessionService implements ISessionService {
     
     private static final Integer EXPIRATION_TOKEN = 3600000;
+    private static final Integer EXPIRATION_NONCE = 3600000;
+    
+    private static final String PREFIX_NONCE = "NONCE-";
     
     @Autowired
     @Qualifier("TeacherServices")
     private ITeacherServices teacherServices;
     
     @Autowired
-    @Qualifier("SQSServices")
-    private ISQSServices sqsServices;
+    @Qualifier("SendGridServices")
+    private IEmailServices emailServices;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -49,7 +53,6 @@ public class SessionService implements ISessionService {
         
         if (match) {
             UUID token = UUID.randomUUID();
-            System.out.println(token.toString());
             template.opsForValue().set(token + "", username, EXPIRATION_TOKEN, TimeUnit.MILLISECONDS);
             tokenObj = new Token(token.toString(), username, teacher.getId(), EXPIRATION_TOKEN);
         } else {
@@ -65,12 +68,12 @@ public class SessionService implements ISessionService {
         teacher.setState(EnumTeacherState.SIGN_UP.getId());
         Teacher result = teacherServices.create(teacher);
         
-        EmailSQS email = new EmailSQS();
+        Email email = new Email();
         email.setTo("to");
         email.setSubject("subject");
         email.setBody("body");
         
-        sqsServices.send(email);
+        emailServices.sendSignUpTeacheMail(teacher);
         return result;
     }
     
@@ -78,6 +81,14 @@ public class SessionService implements ISessionService {
     public Teacher getAuthenticatedTeacher(String user) {
         String teacherUser = template.opsForValue().get(user);
         return teacherServices.findByEmail(teacherUser);
+    }
+    
+    @Override
+    public void forgotPasswordTeacher(String email) {
+        Teacher teacher = teacherServices.findByEmail(email);
+        UUID token = UUID.randomUUID();
+        template.opsForValue().set(PREFIX_NONCE + token, email, EXPIRATION_NONCE, TimeUnit.MILLISECONDS);
+        emailServices.sendForgotPasswordTeacheMail(token + "", email);
     }
     
     private void signUpProcess(User user) {

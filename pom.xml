@@ -64,6 +64,23 @@
             <artifactId>aws-java-sdk-sqs</artifactId>
             <version>1.11.83</version>
         </dependency>
+        <!-- SES -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-ses</artifactId>
+            <version>1.11.84</version>
+        </dependency>
+        <!-- SEND GRID -->
+        <dependency>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>java-http-client</artifactId>
+            <version>2.3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>sendgrid-java</artifactId>
+            <version>3.1.0</version>
+        </dependency>
         <!-- SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>

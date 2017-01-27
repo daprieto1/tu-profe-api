@@ -44,6 +44,16 @@ public class SessionResource {
         return sessionService.signUpTeacher(teacher);
     }
 
+    @RequestMapping(value = "/teacher/forgot-password", method = RequestMethod.POST, produces = "application/json")
+    public void forgotPasswordTeacher(@RequestParam("email") String email) {
+        sessionService.forgotPasswordTeacher(email);
+    }
+
+    @RequestMapping(value = "/teacher/recovery-password", method = RequestMethod.POST, produces = "application/json")
+    public void recoveryPasswordTeacher(@RequestParam("nonce") String nonce, @RequestParam("password") String password) {
+        
+    }
+
     @RequestMapping(value = "/teacher", method = RequestMethod.GET, produces = "application/json")
     public Teacher getAuthenticatedTeacher() {
         String token = request.getHeader(AUTH_HEADER_TOKEN);

@@ -7,7 +7,7 @@ package com.tuprofe.api.logic.implementation;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
-import com.tuprofe.api.entities.EmailSQS;
+import com.tuprofe.api.entities.Email;
 import com.tuprofe.api.logic.services.ISQSServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,7 +29,7 @@ public class SQSServices implements ISQSServices {
     private String emailsQueue;
 
     @Override
-    public void send(EmailSQS email) {
+    public void send(Email email) {
         SendMessageRequest sendMessageRequest = new SendMessageRequest(emailsQueue, "funciona");
         amazonSQS.sendMessage(sendMessageRequest);
     }
