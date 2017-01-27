@@ -17,19 +17,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class TestDynamoTeacherRepository {
-    
+
     @Autowired
     @Qualifier("DynamoTeacherRepository")
     private ITeacherRepository teacherRepository;
-    
+
     @Test
-    public void testSaveTeacher () {
+    public void testSave() {
         try {
             Teacher teacher = new Teacher("name", "lastName", "email", "password");
             teacherRepository.save(teacher);
         } catch (Exception e) {
             System.err.println(e.getCause() + " - " + e.getMessage());
-            String fail = "FAIL = testGeolocalizeAddressByMU : " + e.getMessage();            
+            String fail = "FAIL = testSave : " + e.getMessage();
             fail(fail);
         }
     }

@@ -2,16 +2,19 @@ package com.tuprofe.api.entities;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMarshalling;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBNativeBoolean;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author diego
  */
 @DynamoDBTable(tableName = "training")
-public class Training implements Serializable{
+public class Training implements Serializable {
 
     private Integer id;
     private String type;
@@ -25,7 +28,7 @@ public class Training implements Serializable{
         this.type = type;
         this.questions = questions;
     }
-    
+
     @DynamoDBHashKey(attributeName = "id")
     public Integer getId() {
         return id;
@@ -34,7 +37,7 @@ public class Training implements Serializable{
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     @DynamoDBAttribute(attributeName = "type")
     public String getType() {
         return type;
@@ -43,7 +46,7 @@ public class Training implements Serializable{
     public void setType(String type) {
         this.type = type;
     }
-    
+
     @DynamoDBAttribute(attributeName = "questions")
     public List<Question> getQuestions() {
         return questions;
@@ -65,7 +68,7 @@ public class Training implements Serializable{
             this.questionText = questionText;
             this.answers = answers;
         }
-        
+
         @DynamoDBAttribute(attributeName = "questionText")
         public String getQuestionText() {
             return questionText;
@@ -74,7 +77,7 @@ public class Training implements Serializable{
         public void setQuestionText(String questionText) {
             this.questionText = questionText;
         }
-        
+
         @DynamoDBAttribute(attributeName = "answers")
         public List<Answer> getAnswers() {
             return answers;
@@ -98,7 +101,7 @@ public class Training implements Serializable{
             this.answerText = answerText;
             this.isValid = isValid;
         }
-        
+
         @DynamoDBAttribute(attributeName = "answerText")
         public String getAnswerText() {
             return answerText;
@@ -108,6 +111,7 @@ public class Training implements Serializable{
             this.answerText = answerText;
         }
         
+        @DynamoDBNativeBoolean
         @DynamoDBAttribute(attributeName = "isValid")
         public boolean isIsValid() {
             return isValid;
