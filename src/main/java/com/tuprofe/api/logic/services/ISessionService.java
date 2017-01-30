@@ -16,4 +16,6 @@ public interface ISessionService {
     public Teacher getAuthenticatedTeacher(String user);
     
     public void forgotPasswordTeacher(String email);
+    
+    public void changePasswordTeacher(String nonce, String password);
 }

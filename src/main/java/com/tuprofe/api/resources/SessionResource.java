@@ -51,7 +51,7 @@ public class SessionResource {
 
     @RequestMapping(value = "/teacher/recovery-password", method = RequestMethod.POST, produces = "application/json")
     public void recoveryPasswordTeacher(@RequestParam("nonce") String nonce, @RequestParam("password") String password) {
-        
+        sessionService.changePasswordTeacher(nonce, password);
     }
 
     @RequestMapping(value = "/teacher", method = RequestMethod.GET, produces = "application/json")

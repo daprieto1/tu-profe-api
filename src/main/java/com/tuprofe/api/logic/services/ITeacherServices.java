@@ -9,10 +9,15 @@ import org.springframework.web.multipart.MultipartFile;
  * @author diegoprietotorres
  */
 public interface ITeacherServices extends CRUD<Teacher, String> {
-    
+
     public Teacher findByEmail(String email);
-    
+
+    public void updatePassword(String teacherId, String password);
+
+    public void acceptGameRules(String teacherId);
+
     public void uploadCurriculum(MultipartFile file, String teacherId);
-    
+
     public void uploadPhoto(MultipartFile file, String teacherId);
+
 }

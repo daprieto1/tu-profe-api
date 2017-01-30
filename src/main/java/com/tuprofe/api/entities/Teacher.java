@@ -41,9 +41,13 @@ public class Teacher extends User implements Serializable {
 
     //Schedule
     private String schedule;
+    
+    //
+    private boolean acceptGameRules;
 
-    public Teacher() {
+    public Teacher() {        
         super();
+        this.acceptGameRules = false;
     }
 
     public Teacher(String name, String lastName, String email, String password) {

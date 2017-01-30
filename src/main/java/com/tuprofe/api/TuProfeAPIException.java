@@ -21,6 +21,7 @@ public class TuProfeAPIException extends RuntimeException {
     //Authenticate exceptions
     public static final String BAD_CREDENTIALS = "The provided credentials are bad";
     public static final String BAD_ACCESS_TOKEN = "The provided access token is not valid";
+    public static final String BAD_NONCE = "The provided nonce is not valid";
     
     //Logic Exceptions
     public static final String NOT_VALID_PARAMETER = "The given parameter is not valid.";   

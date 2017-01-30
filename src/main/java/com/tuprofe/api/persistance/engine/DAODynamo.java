@@ -3,6 +3,7 @@ package com.tuprofe.api.persistance.engine;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.SaveBehavior;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.tuprofe.api.persistance.DAO;
 import java.io.Serializable;
 import java.util.List;
@@ -30,7 +31,10 @@ public class DAODynamo<T extends Serializable, PK> implements DAO<T, PK> {
 
     @Override
     public List<T> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDB);
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        List<T> items = mapper.scan(baseClass, scanExpression);
+        return items;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class DAODynamo<T extends Serializable, PK> implements DAO<T, PK> {
 
     @Override
     public T update(PK id, T entity) {
-        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDB);        
+        DynamoDBMapper mapper = new DynamoDBMapper(dynamoDB);
         mapper.save(entity, SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES.config());
         return entity;
     }

@@ -5,6 +5,8 @@
  */
 package com.tuprofe.api.logic;
 
+import java.util.List;
+
 /**
  *
  * @author diegoprietotorres
@@ -18,4 +20,6 @@ public interface CRUD<T, PK> {
     public T update(T entity);
     
     public void delete(T entity);
+    
+    public List<T> finadAll();
 }

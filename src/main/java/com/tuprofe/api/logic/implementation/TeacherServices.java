@@ -7,6 +7,7 @@ import com.tuprofe.api.logic.services.IS3Services;
 import com.tuprofe.api.logic.services.ITeacherServices;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,6 +89,11 @@ public class TeacherServices implements ITeacherServices {
     }
 
     @Override
+    public List<Teacher> finadAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public Teacher findByEmail(String email) {
         if (email == null || "".equals(email)) {
             throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
@@ -100,6 +106,19 @@ public class TeacherServices implements ITeacherServices {
         }
 
         return teacher;
+    }
+
+    @Override
+    public void updatePassword(String teacherId, String password) {
+        Teacher teacher = find(teacherId);
+        teacher.setPassword(password);
+        teacherRepository.update(teacherId, teacher);
+    }
+
+    @Override
+    public void acceptGameRules(String teacherId) {
+        Teacher teacher = find(teacherId);
+        
     }
 
     @Override

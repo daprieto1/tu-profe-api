@@ -2,6 +2,8 @@ package com.tuprofe.persistance;
 
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
+import java.util.List;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +25,11 @@ public class TestDynamoTeacherRepository {
     private ITeacherRepository teacherRepository;
 
     @Test
-    public void testSave() {
+    public void testFinadALL() {
         try {
-            Teacher teacher = new Teacher("name", "lastName", "email", "password");
-            teacherRepository.save(teacher);
+            List<Teacher> teachers = teacherRepository.findAll();
+
+            assertNotNull("The list of teachers must not be null", teachers);
         } catch (Exception e) {
             System.err.println(e.getCause() + " - " + e.getMessage());
             String fail = "FAIL = testSave : " + e.getMessage();

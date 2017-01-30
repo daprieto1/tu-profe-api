@@ -24,10 +24,11 @@ public class TestDynamoTrainingRepository {
     @Autowired
     @Qualifier("DynamoTrainingRepository")
     private ITrainingRepository trainingRepository;
-
+        
+    @Test
     public void testFindAll() {
         try {
-            Training training = trainingRepository.find(1);
+            Training training = trainingRepository.find("cb05f5c2-11f3-473d-bc68-1f9e5b1c4ec2");
 
             assertNotNull("The traings must not be null", training);
         } catch (Exception e) {
@@ -36,8 +37,7 @@ public class TestDynamoTrainingRepository {
             fail(fail);
         }
     }
-
-    @Test
+    /**
     public void testSave() {
         try {
             Training training = new Training();
@@ -48,8 +48,7 @@ public class TestDynamoTrainingRepository {
 
             List<Training.Question> questions = new ArrayList<>();
             questions.add(training.new Question("questionText", answers));
-
-            training.setId(2);
+            
             training.setType("test");
             training.setQuestions(questions);
 
@@ -61,4 +60,7 @@ public class TestDynamoTrainingRepository {
             fail(fail);
         }
     }
+    * */
 }
+
+

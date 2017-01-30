@@ -1,13 +1,11 @@
 package com.tuprofe.api.resources;
 
-import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.logic.services.ITeacherServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +34,11 @@ public class TeacherResource {
     @RequestMapping(method = RequestMethod.PUT, produces = {"application/json"}, consumes = {"application/json"})
     public Teacher update(@RequestBody Teacher teacher) {
         return teacherServices.update(teacher);
+    }
+
+    @RequestMapping(value = "/accept-game-rules/{id}", method = RequestMethod.POST)
+    public void acceptGameRules(@PathVariable("id") String id) {
+        
     }
 
     @RequestMapping(value = "/upload-curriculum", method = RequestMethod.POST)
