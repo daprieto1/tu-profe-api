@@ -27,6 +27,7 @@ public class TuProfeAPIException extends RuntimeException {
     public static final String NOT_VALID_PARAMETER = "The given parameter is not valid.";   
     
     public static final String BAD_TEACHER_STATE = "The teacher had a bad state to perform this action.";
+    public static final String GAME_RULES_ACCEPTED = "The game rules have been accepted.";
     public static final String TEACHER_ALREADY_EXISTS = "Este correo ya ha sido asociado a la cuenta de un profesor.";
 
     public TuProfeAPIException() {

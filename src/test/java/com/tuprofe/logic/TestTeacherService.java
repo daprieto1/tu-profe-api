@@ -112,6 +112,37 @@ public class TestTeacherService {
             fail(fail);
         }
     }
+    
+    @Test
+    public void testAcceptGameRules() {
+        try {
+            Teacher teacher1 = TestTeacherService.createTeacherTemplate();
+            teacher1.setState(EnumTeacherState.SIGN_UP.getId());
+            teacher1 = teacherServices.create(teacher1);
+            teachers.add(teacher1);
+
+            assertNotNull("The teacher ID must not be null", teacher1.getId());
+            assertTrue("The initial accepted rules must be false", !teacher1.isAcceptGameRules());
+
+            Teacher teacher2 = teacherServices.find(teacher1.getId());
+
+            assertNotNull("The teacher 2 must not be null", teacher2);
+            assertTrue("The storage accepted rules must be false", !teacher2.isAcceptGameRules());
+
+            teacherServices.acceptGameRules(teacher1.getId());
+
+            Teacher teacher3 = teacherServices.find(teacher1.getId());
+
+            assertNotNull("The teacher 2 must not be null", teacher3);
+            assertTrue("The storage accepted rules must be true", teacher3.isAcceptGameRules());
+
+        } catch (Exception e) {
+            System.err.println(e.getCause() + " - " + e.getMessage());
+            String fail = "FAIL = testAcceptGameRules : " + e.getMessage();
+            fail(fail);
+        }
+    }
+    
 
     @Test
     @Ignore

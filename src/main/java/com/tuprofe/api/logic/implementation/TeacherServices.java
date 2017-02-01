@@ -116,9 +116,25 @@ public class TeacherServices implements ITeacherServices {
     }
 
     @Override
+    public void activateAccount(String teacherId) {
+        Teacher teacher = find(teacherId);
+        if (teacher.getState() == EnumTeacherState.INACTIVE.getId()) {
+            teacher.setState(EnumTeacherState.ACTIVE.getId());
+            update(teacher);
+        } else {
+            throw new TuProfeAPIException(TuProfeAPIException.BAD_TEACHER_STATE);
+        }
+    }
+
+    @Override
     public void acceptGameRules(String teacherId) {
         Teacher teacher = find(teacherId);
-        
+        if (teacher.isAcceptGameRules()) {
+            throw new TuProfeAPIException(TuProfeAPIException.GAME_RULES_ACCEPTED);
+        } else {
+            teacher.setAcceptGameRules(true);
+            update(teacher);
+        }
     }
 
     @Override

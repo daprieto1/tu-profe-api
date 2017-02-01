@@ -38,14 +38,16 @@ public class Teacher extends User implements Serializable {
     private String bank;
     private String accountNumber;
     private String accountType;
+    private String accountHolderIdentification;
+    private String accountHolderName;
 
     //Schedule
     private String schedule;
-    
+
     //
     private boolean acceptGameRules;
 
-    public Teacher() {        
+    public Teacher() {
         super();
         this.acceptGameRules = false;
     }
@@ -217,6 +219,24 @@ public class Teacher extends User implements Serializable {
         this.accountType = accountType;
     }
 
+    @DynamoDBAttribute(attributeName = "accountHolderIdentification")
+    public String getAccountHolderIdentification() {
+        return accountHolderIdentification;
+    }
+
+    public void setAccountHolderIdentification(String accountHolderIdentification) {
+        this.accountHolderIdentification = accountHolderIdentification;
+    }
+
+    @DynamoDBAttribute(attributeName = "accountHolderName")
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+
+    public void setAccountHolderName(String accountHolderName) {
+        this.accountHolderName = accountHolderName;
+    }
+
     @DynamoDBAttribute(attributeName = "schedule")
     public String getSchedule() {
         return schedule;
@@ -224,6 +244,15 @@ public class Teacher extends User implements Serializable {
 
     public void setSchedule(String schedule) {
         this.schedule = schedule;
+    }
+
+    @DynamoDBAttribute(attributeName = "acceptGameRules")
+    public boolean isAcceptGameRules() {
+        return acceptGameRules;
+    }
+
+    public void setAcceptGameRules(boolean acceptGameRules) {
+        this.acceptGameRules = acceptGameRules;
     }
 
 }

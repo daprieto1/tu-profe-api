@@ -35,10 +35,15 @@ public class TeacherResource {
     public Teacher update(@RequestBody Teacher teacher) {
         return teacherServices.update(teacher);
     }
-
+    
+    @RequestMapping(value = "/activate-account/{id}", method = RequestMethod.POST)
+    public void activateAccount(@PathVariable("id") String id) {
+        teacherServices.activateAccount(id);
+    }
+    
     @RequestMapping(value = "/accept-game-rules/{id}", method = RequestMethod.POST)
     public void acceptGameRules(@PathVariable("id") String id) {
-        
+        teacherServices.acceptGameRules(id);
     }
 
     @RequestMapping(value = "/upload-curriculum", method = RequestMethod.POST)

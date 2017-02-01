@@ -2,8 +2,6 @@ package com.tuprofe.persistance;
 
 import com.tuprofe.api.entities.Training;
 import com.tuprofe.api.persistance.repositories.ITrainingRepository;
-import java.util.ArrayList;
-import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -28,10 +26,13 @@ public class TestDynamoTrainingRepository {
     @Test
     public void testFindAll() {
         try {
-            Training training = trainingRepository.find("cb05f5c2-11f3-473d-bc68-1f9e5b1c4ec2");
+            Training training = trainingRepository.find("1");
 
             assertNotNull("The traings must not be null", training);
         } catch (Exception e) {
+            for(StackTraceElement s : e.getStackTrace()){
+                System.err.println(s.toString());
+            }
             System.err.println(e.getCause() + " - " + e.getMessage());
             String fail = "FAIL = testFindAll : " + e.getMessage();
             fail(fail);
