@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tuprofe.api.logic.implementation;
 
+import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.Course;
 import com.tuprofe.api.logic.services.ICourseServices;
 import com.tuprofe.api.persistance.repositories.ICourseRepository;
@@ -26,8 +22,11 @@ public class CourseServices implements ICourseServices {
     private ICourseRepository courseRepository;
 
     @Override
-    public Course create(Course entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Course create(Course course) {
+        if (course == null) {
+            throw new TuProfeAPIException(TuProfeAPIException.NULL_PARAM);
+        }
+        return courseRepository.save(course);
     }
 
     @Override

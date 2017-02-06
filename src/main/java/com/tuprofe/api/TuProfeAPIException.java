@@ -29,6 +29,10 @@ public class TuProfeAPIException extends RuntimeException {
     public static final String BAD_TEACHER_STATE = "The teacher had a bad state to perform this action.";
     public static final String GAME_RULES_ACCEPTED = "The game rules have been accepted.";
     public static final String TEACHER_ALREADY_EXISTS = "Este correo ya ha sido asociado a la cuenta de un profesor.";
+    public static final String GAME_RULES_NOT_ACCEPTED = "El profesor no ha aceptado las reglas de juego.";
+    public static final String EXAM_NOT_PASS = "El profesor no ha pasado el examen.";
+    
+    public static final String WRONG_INTERVIEW_CAPACITY = "La capacidad de la entrevista es erronea.";
 
     public TuProfeAPIException() {
         super();

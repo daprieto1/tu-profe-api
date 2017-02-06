@@ -1,6 +1,7 @@
 package com.tuprofe.api.resources;
 
 import com.tuprofe.api.entities.Teacher;
+import com.tuprofe.api.entities.Teacher.Exam;
 import com.tuprofe.api.logic.services.ITeacherServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,6 +45,11 @@ public class TeacherResource {
     @RequestMapping(value = "/accept-game-rules/{id}", method = RequestMethod.POST)
     public void acceptGameRules(@PathVariable("id") String id) {
         teacherServices.acceptGameRules(id);
+    }
+    
+    @RequestMapping(value = "/take-exam/{id}", method = RequestMethod.POST)
+    public void takeExam(@PathVariable("id") String id, @RequestBody Exam exam) {
+        teacherServices.takeExam(id, exam);
     }
 
     @RequestMapping(value = "/upload-curriculum", method = RequestMethod.POST)

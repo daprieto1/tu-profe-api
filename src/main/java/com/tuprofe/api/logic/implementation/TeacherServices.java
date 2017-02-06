@@ -2,9 +2,11 @@ package com.tuprofe.api.logic.implementation;
 
 import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.Teacher;
+import com.tuprofe.api.entities.Training;
 import com.tuprofe.api.entities.enums.EnumTeacherState;
 import com.tuprofe.api.logic.services.IS3Services;
 import com.tuprofe.api.logic.services.ITeacherServices;
+import com.tuprofe.api.logic.services.ITrainingServices;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
 import java.io.IOException;
 import java.util.List;
@@ -40,6 +42,10 @@ public class TeacherServices implements ITeacherServices {
     @Autowired
     @Qualifier("S3ServicesClient")
     private IS3Services s3Services;
+
+    @Autowired
+    @Qualifier("TrainingServices")
+    private ITrainingServices trainingServices;
 
     @Override
     public Teacher create(Teacher teacher) {
@@ -118,11 +124,15 @@ public class TeacherServices implements ITeacherServices {
     @Override
     public void activateAccount(String teacherId) {
         Teacher teacher = find(teacherId);
-        if (teacher.getState() == EnumTeacherState.INACTIVE.getId()) {
+        if (!teacher.isAcceptGameRules()) {
+            throw new TuProfeAPIException(TuProfeAPIException.GAME_RULES_NOT_ACCEPTED);
+        } else if (!teacher.getExam().isPassExam()) {
+            throw new TuProfeAPIException(TuProfeAPIException.EXAM_NOT_PASS);
+        } else if (teacher.getState() != EnumTeacherState.INACTIVE.getId()) {
+            throw new TuProfeAPIException(TuProfeAPIException.BAD_TEACHER_STATE);
+        } else {
             teacher.setState(EnumTeacherState.ACTIVE.getId());
             update(teacher);
-        } else {
-            throw new TuProfeAPIException(TuProfeAPIException.BAD_TEACHER_STATE);
         }
     }
 
@@ -135,6 +145,22 @@ public class TeacherServices implements ITeacherServices {
             teacher.setAcceptGameRules(true);
             update(teacher);
         }
+    }
+
+    @Override
+    public void takeExam(String teacherId, Teacher.Exam exam) {
+        Teacher teacher = find(teacherId);
+        Training training = trainingServices.find(exam.getIdExam());
+
+        if (exam.getCorrectAnswers() >= training.getPassLimit()) {
+            exam.setPassExam(true);
+        } else {
+            exam.setPassExam(false);
+            teacher.setState(EnumTeacherState.INACTIVE.getId());
+        }
+
+        teacher.setExam(exam);
+        update(teacher);
     }
 
     @Override

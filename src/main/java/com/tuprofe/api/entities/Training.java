@@ -17,14 +17,16 @@ public class Training implements Serializable {
 
     private String id;
     private String type;
+    private Integer passLimit;
     private List<Question> questions;
 
     public Training() {
     }
 
-    public Training(String id, String type, List<Question> questions) {
+    public Training(String id, String type, Integer passLimit, List<Question> questions) {
         this.id = id;
         this.type = type;
+        this.passLimit = passLimit;
         this.questions = questions;
     }
 
@@ -45,6 +47,15 @@ public class Training implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @DynamoDBAttribute(attributeName = "passLimit")
+    public Integer getPassLimit() {
+        return passLimit;
+    }
+
+    public void setPassLimit(Integer passLimit) {
+        this.passLimit = passLimit;
     }
 
     @DynamoDBAttribute(attributeName = "questions")
