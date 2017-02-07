@@ -33,6 +33,8 @@ public class TuProfeAPIException extends RuntimeException {
     public static final String EXAM_NOT_PASS = "El profesor no ha pasado el examen.";
     
     public static final String WRONG_INTERVIEW_CAPACITY = "La capacidad de la entrevista es erronea.";
+    public static final String TEACHER_WITH_INTERVIEW = "El usuario actualmente tiene una entrevista asignada.";
+    public static final String INTERVIEW_FULL = "Los cupos para la entrevista se han acabado.";
 
     public TuProfeAPIException() {
         super();

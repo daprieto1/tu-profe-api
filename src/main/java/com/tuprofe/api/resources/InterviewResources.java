@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,7 +27,7 @@ public class InterviewResources {
     @Autowired
     @Qualifier("InterviewServices")
     private IInterviewServices interviewServices;
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Interview> getAll() {
         return interviewServices.finadAll();
@@ -35,5 +36,15 @@ public class InterviewResources {
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public Interview create(@RequestBody Interview interview) {
         return interviewServices.create(interview);
+    }
+
+    @RequestMapping(value = "/active", method = RequestMethod.GET, produces = "application/json")
+    public List<Interview> getAllActive() {
+        return interviewServices.getActive();
+    }
+
+    @RequestMapping(value = "/take-place", method = RequestMethod.POST, produces = "application/json")
+    public void takePlace(@RequestParam("teacherId") String teacherId, @RequestParam("interviewId") String interviewId) {
+        interviewServices.takePlace(teacherId, interviewId);
     }
 }

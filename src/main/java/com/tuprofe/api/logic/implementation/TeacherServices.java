@@ -83,10 +83,13 @@ public class TeacherServices implements ITeacherServices {
     }
 
     @Override
-    public Teacher update(Teacher entity) {
-        entity.setPassword(null);
-        entity.setEmail(null);
-        return teacherRepository.update(null, entity);
+    public Teacher update(Teacher teacher) {
+        if (teacher == null) {
+            throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
+        }
+        teacher.setPassword(null);
+        teacher.setEmail(null);
+        return teacherRepository.update(null, teacher);
     }
 
     @Override

@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tuprofe.api.logic.implementation;
 
 import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.Interview;
+import com.tuprofe.api.entities.Teacher;
+import com.tuprofe.api.entities.enums.EnumTeacherState;
 import com.tuprofe.api.logic.services.IInterviewServices;
+import com.tuprofe.api.logic.services.ITeacherServices;
 import com.tuprofe.api.persistance.repositories.IInterviewRepository;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,6 +27,10 @@ public class InterviewServices implements IInterviewServices {
     @Autowired
     @Qualifier("DynamoInterviewRepository")
     private IInterviewRepository interviewRepository;
+
+    @Autowired
+    @Qualifier("TeacherServices")
+    private ITeacherServices teacherServices;
 
     @Override
     public Interview create(Interview interview) {
@@ -55,8 +58,13 @@ public class InterviewServices implements IInterviewServices {
     }
 
     @Override
-    public Interview update(Interview entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Interview update(Interview interview) {
+        if (interview == null) {
+            throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
+        } else if (interview.getInterviewed().size() > interview.getCapacity()) {
+            throw new TuProfeAPIException(TuProfeAPIException.INTERVIEW_FULL);
+        }
+        return interviewRepository.update(null, interview);
     }
 
     @Override
@@ -67,6 +75,31 @@ public class InterviewServices implements IInterviewServices {
     @Override
     public List<Interview> finadAll() {
         return interviewRepository.findAll();
+    }
+
+    @Override
+    public List<Interview> getActive() {
+        Long currentTime = (new Date()).getTime();
+        return interviewRepository.findAll(currentTime);
+    }
+
+    @Override
+    public void takePlace(String teacherId, String interviewId) {
+        Teacher teacher = teacherServices.find(teacherId);
+        Interview interview = find(interviewId);
+
+        if (teacher.getInterview() != null) {
+            throw new TuProfeAPIException(TuProfeAPIException.TEACHER_WITH_INTERVIEW);
+        } else if (interview.getInterviewed().size() >= interview.getCapacity()) {
+            throw new TuProfeAPIException(TuProfeAPIException.INTERVIEW_FULL);
+        }
+
+        teacher.setInterview(interview.getId());
+        teacher.setState(EnumTeacherState.INTERVIEW.getId());
+        interview.getInterviewed().add(teacher.getId());
+
+        teacherServices.update(teacher);
+        this.update(interview);
     }
 
 }

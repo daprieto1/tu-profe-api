@@ -16,4 +16,6 @@ import java.util.List;
 public interface IInterviewServices extends CRUD<Interview, String> {
     
     public List<Interview> getActive();
+    
+    public void takePlace(String teacherId, String interviewId);
 }

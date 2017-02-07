@@ -47,6 +47,7 @@ public class Teacher extends User implements Serializable {
 
     //Auxiliar Variables
     private boolean acceptGameRules;
+    private String interview;
     private Exam exam;
 
     public Teacher() {
@@ -281,7 +282,17 @@ public class Teacher extends User implements Serializable {
     public void setExam(Exam exam) {
         this.exam = exam;
     }
+    
+    @DynamoDBAttribute(attributeName = "interview")
+    public String getInterview() {
+        return interview;
+    }
 
+    public void setInterview(String interview) {
+        this.interview = interview;
+    }
+    
+    
     // </editor-fold>
     // <editor-fold desc="Exam" defaultstate="collapsed">
     @DynamoDBDocument
