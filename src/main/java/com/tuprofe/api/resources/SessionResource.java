@@ -1,5 +1,6 @@
 package com.tuprofe.api.resources;
 
+import com.tuprofe.api.entities.AdminUser;
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.entities.Token;
 import com.tuprofe.api.entities.User;
@@ -58,5 +59,15 @@ public class SessionResource {
     public Teacher getAuthenticatedTeacher() {
         String token = request.getHeader(AUTH_HEADER_TOKEN);
         return sessionService.getAuthenticatedTeacher(token);
+    }
+
+    @RequestMapping(value = "/admin-user/login", method = RequestMethod.POST, produces = "application/json")
+    public Token loginAdminUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+        return sessionService.authenticate(AdminUser.class, username, password);
+    }
+
+    @RequestMapping(value = "/admin-user/signup", method = RequestMethod.POST, produces = "application/json")
+    public User signupAdminUser(@RequestBody AdminUser adminUser) {
+        return sessionService.signUp(AdminUser.class, adminUser);
     }
 }

@@ -1,8 +1,11 @@
 package com.tuprofe.logic;
 
+import com.tuprofe.api.entities.AdminUser;
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.entities.Token;
+import com.tuprofe.api.logic.services.IAdminUserServices;
 import com.tuprofe.api.logic.services.ISessionService;
+import com.tuprofe.api.persistance.repositories.IAdminUserRepository;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +33,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TestSessionService {
     
     private List<Teacher> teachers;
+    private List<AdminUser> adminUsers;
     
     @Autowired
     @Qualifier("SessionService")
     private ISessionService sessionService;
     
     @Autowired
+    @Qualifier("AdminUserServices")
+    private IAdminUserServices adminUserServices;
+    
+    @Autowired
     @Qualifier("DynamoTeacherRepository")
     ITeacherRepository teacherRepository;
+    
+    @Autowired
+    @Qualifier("DynamoAdminUserRepository")
+    private IAdminUserRepository adminUserRepository;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -48,6 +60,7 @@ public class TestSessionService {
     @Before
     public void initTest() {
         teachers = new ArrayList<>();
+        adminUsers = new ArrayList<>();
     }
     
     @Test
@@ -91,8 +104,29 @@ public class TestSessionService {
         }
     }
     
+    @Test
+    public void testAuthenticateAdminUser() {
+        try {
+            AdminUser adminUser = TestAdminUserServices.createAdminUserTemplate();
+            adminUser = adminUserServices.create(adminUser);
+            adminUsers.add(adminUser);
+            
+            Token token = sessionService.authenticate(AdminUser.class, TestAdminUserServices.ADMIN_USER_EMAIL, "87654321");
+            assertNotNull("The teacher ID must not be null", token);
+            
+            String username = template.opsForValue().get(token.getToken());
+            assertNotNull("The teacher ID must not be null", username);
+            assertTrue("The username must be equal to the teacher mail", adminUser.getEmail().equals(username));
+        } catch (Exception e) {
+            System.err.println(e.getCause() + " - " + e.getMessage());
+            String fail = "FAIL = testAuthenticateAdminUser : " + e.getMessage();
+            fail(fail);
+        }
+    }
+    
     @After
     public void tearDown() {
         teachers.forEach(t -> teacherRepository.delete(t));
+        adminUsers.forEach(au -> adminUserRepository.delete(au));
     }
 }

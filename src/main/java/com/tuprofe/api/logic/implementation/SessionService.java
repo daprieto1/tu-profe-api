@@ -1,11 +1,13 @@
 package com.tuprofe.api.logic.implementation;
 
 import com.tuprofe.api.TuProfeAPIException;
+import com.tuprofe.api.entities.AdminUser;
 import com.tuprofe.api.entities.Email;
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.entities.Token;
 import com.tuprofe.api.entities.User;
 import com.tuprofe.api.entities.enums.EnumTeacherState;
+import com.tuprofe.api.logic.services.IAdminUserServices;
 import com.tuprofe.api.logic.services.IEmailServices;
 import com.tuprofe.api.logic.services.ISessionService;
 import com.tuprofe.api.logic.services.ITeacherServices;
@@ -33,6 +35,10 @@ public class SessionService implements ISessionService {
     @Autowired
     @Qualifier("TeacherServices")
     private ITeacherServices teacherServices;
+
+    @Autowired
+    @Qualifier("AdminUserServices")
+    private IAdminUserServices adminUserServices;
 
     @Autowired
     @Qualifier("SendGridServices")
@@ -104,6 +110,48 @@ public class SessionService implements ISessionService {
 
     private void signUpProcess(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    }
+
+    @Override
+    public Token authenticate(Class c, String username, String password) {
+        User user = null;
+        if (c.equals(Teacher.class)) {
+            user = teacherServices.findByEmail(username);
+        } else if (c.equals(AdminUser.class)) {
+            user = adminUserServices.findByEmail(username);
+        } else {
+            throw new TuProfeAPIException(TuProfeAPIException.NOT_VALID_PARAMETER);
+        }
+
+        boolean match = bCryptPasswordEncoder.matches(password, user.getPassword());
+        Token tokenObj;
+
+        if (match) {
+            UUID token = UUID.randomUUID();
+            template.opsForValue().set(token + "", username, EXPIRATION_TOKEN, TimeUnit.MILLISECONDS);
+            tokenObj = new Token(token.toString(), username, user.getId(), EXPIRATION_TOKEN);
+        } else {
+            throw new TuProfeAPIException(TuProfeAPIException.BAD_CREDENTIALS);
+        }
+
+        return tokenObj;
+    }
+
+    @Override
+    public User signUp(Class c, User user) {
+        User result;
+        signUpProcess(user);
+
+        if (c.equals(Teacher.class)) {
+            user.setState(EnumTeacherState.SIGN_UP.getId());
+            result = teacherServices.create((Teacher) user);
+        } else if (c.equals(AdminUser.class)) {
+            result = adminUserServices.create((AdminUser) user);
+        } else {
+            throw new TuProfeAPIException(TuProfeAPIException.NOT_VALID_PARAMETER);
+        }
+
+        return result;
     }
 
 }

@@ -33,6 +33,7 @@ public class AuthorizationAspect {
         avoid.add("signupTeacher");
         avoid.add("forgotPasswordTeacher");
         avoid.add("recoveryPasswordTeacher");
+        avoid.add("loginAdminUser");
         
         if (!avoid.contains(joinPoint.getSignature().getName())) {
             String token = request.getHeader(SessionResource.AUTH_HEADER_TOKEN);
