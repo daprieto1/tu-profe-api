@@ -13,9 +13,11 @@ import com.tuprofe.api.entities.Teacher;
  * @author diegoprietotorres
  */
 public interface IEmailServices {
+    
     public void sendEmail(Email email);
     
     public void sendSignUpTeacheMail(Teacher teacher);
     
     public void sendForgotPasswordTeacheMail(String nonce, String email);
+    
 }

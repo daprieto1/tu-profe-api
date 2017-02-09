@@ -2,9 +2,11 @@ package com.tuprofe.api.logic.implementation;
 
 import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.Teacher;
+import com.tuprofe.api.entities.TeacherHistory;
 import com.tuprofe.api.entities.Training;
 import com.tuprofe.api.entities.enums.EnumTeacherState;
 import com.tuprofe.api.logic.services.IS3Services;
+import com.tuprofe.api.logic.services.ITeacherHistoryServices;
 import com.tuprofe.api.logic.services.ITeacherServices;
 import com.tuprofe.api.logic.services.ITrainingServices;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
@@ -47,8 +49,14 @@ public class TeacherServices implements ITeacherServices {
     @Qualifier("TrainingServices")
     private ITrainingServices trainingServices;
 
+    @Autowired
+    @Qualifier("TeacherHistoryServices")
+    private ITeacherHistoryServices teacherHistoryServices;
+
     @Override
     public Teacher create(Teacher teacher) {
+        Teacher result;
+
         if (teacher == null) {
             throw new TuProfeAPIException(TuProfeAPIException.NULL_PARAM);
         } else if (teacher.getState() == null) {
@@ -64,7 +72,11 @@ public class TeacherServices implements ITeacherServices {
         }
 
         teacher.setSchedule(schedule);
-        return teacherRepository.save(teacher);
+        result = teacherRepository.save(teacher);
+
+        saveTeacherChange(result);
+
+        return result;
     }
 
     @Override
@@ -84,12 +96,18 @@ public class TeacherServices implements ITeacherServices {
 
     @Override
     public Teacher update(Teacher teacher) {
+        Teacher result;
+        
         if (teacher == null) {
             throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
         }
         teacher.setPassword(null);
         teacher.setEmail(null);
-        return teacherRepository.update(null, teacher);
+        result = teacherRepository.update(null, teacher);
+        
+        saveTeacherChange(result);
+        
+        return result;
     }
 
     @Override
@@ -173,7 +191,7 @@ public class TeacherServices implements ITeacherServices {
             String key = teacher.getId() + ".docx";
             s3Services.uploadFile(file, curriculumBucket, key);
             teacher.setState(EnumTeacherState.CURRICULUM.getId());
-            this.update(teacher);
+            update(teacher);
         } catch (IOException ex) {
             throw new TuProfeAPIException(ex.getMessage(), ex.getCause());
         }
@@ -189,6 +207,11 @@ public class TeacherServices implements ITeacherServices {
         } catch (IOException ex) {
             throw new TuProfeAPIException(ex.getMessage(), ex.getCause());
         }
+    }
+
+    private TeacherHistory saveTeacherChange(Teacher teacher) {
+        TeacherHistory teacherHistory = new TeacherHistory(teacher.getId(), teacher.getState());
+        return teacherHistoryServices.create(teacherHistory);
     }
 
 }
