@@ -35,6 +35,10 @@ public class TuProfeAPIException extends RuntimeException {
     public static final String WRONG_INTERVIEW_CAPACITY = "La capacidad de la entrevista es erronea.";
     public static final String TEACHER_WITH_INTERVIEW = "El usuario actualmente tiene una entrevista asignada.";
     public static final String INTERVIEW_FULL = "Los cupos para la entrevista se han acabado.";
+    
+    public static final String WRONG_INDUCTION_CAPACITY = "La capacidad de la capacitación es erronea.";
+    public static final String TEACHER_WITH_INDUCTION = "El usuario actualmente tiene una capacitación asignada.";
+    public static final String INDUCTION_FULL = "Los cupos para la capacitación se han acabado.";
 
     public TuProfeAPIException() {
         super();

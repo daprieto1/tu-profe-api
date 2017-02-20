@@ -9,7 +9,6 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.tuprofe.api.entities.Course;
 import com.tuprofe.api.entities.Interview;
 import com.tuprofe.api.persistance.engine.DAODynamo;
 import com.tuprofe.api.persistance.repositories.IInterviewRepository;

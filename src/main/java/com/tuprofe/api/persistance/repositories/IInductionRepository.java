@@ -5,15 +5,13 @@
  */
 package com.tuprofe.api.persistance.repositories;
 
-import com.tuprofe.api.entities.AdminUser;
+import com.tuprofe.api.entities.Induction;
 import com.tuprofe.api.persistance.DAO;
 
 /**
  *
  * @author diego
  */
-public interface IAdminUserRepository extends DAO<AdminUser, String> {
-    
-    public AdminUser findByEmail(String email);
+public interface IInductionRepository extends DAO<Induction, String>{
     
 }
