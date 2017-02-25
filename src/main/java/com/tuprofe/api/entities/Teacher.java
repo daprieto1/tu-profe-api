@@ -46,9 +46,11 @@ public class Teacher extends User implements Serializable {
     private List<String> courses;
 
     //Auxiliar Variables
-    private boolean validData;
-    private boolean acceptGameRules;
+    private Boolean cultureForm;
+    private Boolean validData;
+    private Boolean acceptGameRules;
     private String interview;
+    private String profileDescription;
     private Exam exam;
 
     public Teacher() {
@@ -267,21 +269,39 @@ public class Teacher extends User implements Serializable {
         this.courses = courses;
     }
 
+    @DynamoDBAttribute(attributeName = "cultureForm")
+    public Boolean isCultureForm() {
+        return cultureForm;
+    }
+
+    public void setCultureForm(Boolean cultureForm) {
+        this.cultureForm = cultureForm;
+    }
+
+    @DynamoDBAttribute(attributeName = "profileDescription")
+    public String getProfileDescription() {
+        return profileDescription;
+    }
+
+    public void setProfileDescription(String profileDescription) {
+        this.profileDescription = profileDescription;
+    }
+
     @DynamoDBAttribute(attributeName = "validData")
-    public boolean isValidData() {
+    public Boolean isValidData() {
         return validData;
     }
 
-    public void setValidData(boolean validData) {
+    public void setValidData(Boolean validData) {
         this.validData = validData;
     }
 
     @DynamoDBAttribute(attributeName = "acceptGameRules")
-    public boolean isAcceptGameRules() {
+    public Boolean isAcceptGameRules() {
         return acceptGameRules;
     }
 
-    public void setAcceptGameRules(boolean acceptGameRules) {
+    public void setAcceptGameRules(Boolean acceptGameRules) {
         this.acceptGameRules = acceptGameRules;
     }
 
