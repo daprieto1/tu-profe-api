@@ -3,6 +3,7 @@ package com.tuprofe.api.resources;
 import com.tuprofe.api.entities.Teacher;
 import com.tuprofe.api.entities.Teacher.Exam;
 import com.tuprofe.api.logic.services.ITeacherServices;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -36,17 +37,22 @@ public class TeacherResource {
     public Teacher update(@RequestBody Teacher teacher) {
         return teacherServices.update(teacher);
     }
-    
+
     @RequestMapping(value = "/activate-account/{id}", method = RequestMethod.POST)
     public void activateAccount(@PathVariable("id") String id) {
         teacherServices.activateAccount(id);
     }
-    
+
+    @RequestMapping(value = "/change-valid-data/{id}", method = RequestMethod.POST)
+    public void changeValidData(@RequestParam(value = "validData", required = false) String validData, @PathVariable("id") String id) {
+        teacherServices.changeValidData(id, StringUtils.isBlank(validData));
+    }
+
     @RequestMapping(value = "/accept-game-rules/{id}", method = RequestMethod.POST)
     public void acceptGameRules(@PathVariable("id") String id) {
         teacherServices.acceptGameRules(id);
     }
-    
+
     @RequestMapping(value = "/take-exam/{id}", method = RequestMethod.POST)
     public void takeExam(@PathVariable("id") String id, @RequestBody Exam exam) {
         teacherServices.takeExam(id, exam);

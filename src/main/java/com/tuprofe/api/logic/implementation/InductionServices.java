@@ -76,7 +76,7 @@ public class InductionServices implements IInductionServices{
 
     @Override
     public List<Induction> finadAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return inductionRepository.findAll();
     }
     
 }

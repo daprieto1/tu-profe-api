@@ -17,6 +17,8 @@ public interface ITeacherServices extends CRUD<Teacher, String> {
 
     public void activateAccount(String teacherId);
 
+    public void changeValidData(String teacherId, boolean validData);
+    
     public void acceptGameRules(String teacherId);
 
     public void takeExam(String teacherId, Exam exam);

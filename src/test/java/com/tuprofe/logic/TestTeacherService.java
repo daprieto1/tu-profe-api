@@ -64,6 +64,7 @@ public class TestTeacherService {
             teachers.add(teacher1);
 
             assertNotNull("The teacher ID must not be null", teacher1.getId());
+            assertTrue("The initial valid data must be false", !teacher1.isValidData());
             assertTrue("The initial accepted rules must be false", !teacher1.isAcceptGameRules());
             assertTrue("The initial pass exam must be false", !teacher1.getExam().isPassExam());
 

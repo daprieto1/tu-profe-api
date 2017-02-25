@@ -46,12 +46,14 @@ public class Teacher extends User implements Serializable {
     private List<String> courses;
 
     //Auxiliar Variables
+    private boolean validData;
     private boolean acceptGameRules;
     private String interview;
     private Exam exam;
 
     public Teacher() {
         super();
+        this.validData = false;
         this.acceptGameRules = false;
         this.courses = new ArrayList<>();
         this.exam = new Exam("", false, 0, 0);
@@ -265,6 +267,15 @@ public class Teacher extends User implements Serializable {
         this.courses = courses;
     }
 
+    @DynamoDBAttribute(attributeName = "validData")
+    public boolean isValidData() {
+        return validData;
+    }
+
+    public void setValidData(boolean validData) {
+        this.validData = validData;
+    }
+
     @DynamoDBAttribute(attributeName = "acceptGameRules")
     public boolean isAcceptGameRules() {
         return acceptGameRules;
@@ -282,7 +293,7 @@ public class Teacher extends User implements Serializable {
     public void setExam(Exam exam) {
         this.exam = exam;
     }
-    
+
     @DynamoDBAttribute(attributeName = "interview")
     public String getInterview() {
         return interview;
@@ -291,8 +302,7 @@ public class Teacher extends User implements Serializable {
     public void setInterview(String interview) {
         this.interview = interview;
     }
-    
-    
+
     // </editor-fold>
     // <editor-fold desc="Exam" defaultstate="collapsed">
     @DynamoDBDocument

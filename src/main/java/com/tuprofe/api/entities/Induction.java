@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tuprofe.api.entities;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
@@ -17,7 +12,7 @@ import java.util.List;
  *
  * @author diego
  */
-@DynamoDBTable(tableName = "interview")
+@DynamoDBTable(tableName = "induction")
 public class Induction implements Serializable{
     private String id;
     private Long startDateTime;

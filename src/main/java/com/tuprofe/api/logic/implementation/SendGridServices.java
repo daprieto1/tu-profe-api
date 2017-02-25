@@ -37,10 +37,7 @@ public class SendGridServices implements IEmailServices {
             request.method = Method.POST;
             request.endpoint = "mail/send";
             request.body = mail.build();
-            Response response = sg.api(request);
-            System.out.println(response.statusCode);
-            System.out.println(response.body);
-            System.out.println(response.headers);
+            //Response response = sg.api(request);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
@@ -62,10 +59,7 @@ public class SendGridServices implements IEmailServices {
             request.method = Method.POST;
             request.endpoint = "mail/send";
             request.body = mail.build();
-            Response response = sg.api(request);
-            System.out.println(response.statusCode);
-            System.out.println(response.body);
-            System.out.println(response.headers);
+            //Response response = sg.api(request);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
@@ -87,10 +81,7 @@ public class SendGridServices implements IEmailServices {
             request.method = Method.POST;
             request.endpoint = "mail/send";
             request.body = mail.build();
-            Response response = sg.api(request);
-            System.out.println(response.statusCode);
-            System.out.println(response.body);
-            System.out.println(response.headers);
+            //Response response = sg.api(request);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }

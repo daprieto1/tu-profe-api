@@ -12,6 +12,7 @@ import com.tuprofe.api.logic.services.ITrainingServices;
 import com.tuprofe.api.persistance.repositories.ITeacherRepository;
 import java.io.IOException;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -97,16 +98,16 @@ public class TeacherServices implements ITeacherServices {
     @Override
     public Teacher update(Teacher teacher) {
         Teacher result;
-        
+
         if (teacher == null) {
             throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
         }
         teacher.setPassword(null);
         teacher.setEmail(null);
         result = teacherRepository.update(null, teacher);
-        
+
         saveTeacherChange(result);
-        
+
         return result;
     }
 
@@ -155,6 +156,21 @@ public class TeacherServices implements ITeacherServices {
             teacher.setState(EnumTeacherState.ACTIVE.getId());
             update(teacher);
         }
+    }
+
+    @Override
+    public void changeValidData(String teacherId, boolean validData) {
+        Teacher teacher = find(teacherId);
+        if (validData) {
+            if (StringUtils.isBlank(teacher.getName())) {
+                throw new TuProfeAPIException(TuProfeAPIException.TEACHER_NOT_VALID_DATA);
+            } else {
+                teacher.setValidData(validData);
+            }
+        } else {
+            teacher.setValidData(validData);
+        }
+        this.update(teacher);
     }
 
     @Override
