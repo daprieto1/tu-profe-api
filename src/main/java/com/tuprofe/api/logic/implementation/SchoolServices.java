@@ -1,5 +1,6 @@
 package com.tuprofe.api.logic.implementation;
 
+import com.tuprofe.api.TuProfeAPIException;
 import com.tuprofe.api.entities.School;
 import com.tuprofe.api.logic.services.ISchoolServices;
 import com.tuprofe.api.persistance.repositories.ISchoolRepository;
@@ -21,8 +22,12 @@ public class SchoolServices implements ISchoolServices {
     private ISchoolRepository schoolRepository;
 
     @Override
-    public School create(School entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public School create(School school) {
+        if(school == null){
+            throw new TuProfeAPIException(TuProfeAPIException.NULL_PARAM);
+        }else{
+            schoolRepository.save(school);
+        }
     }
 
     @Override
