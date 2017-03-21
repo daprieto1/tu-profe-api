@@ -5,13 +5,13 @@
  */
 package com.tuprofe.api.logic.services;
 
-import com.tuprofe.api.entities.University;
+import com.tuprofe.api.entities.School;
 import com.tuprofe.api.logic.CRUD;
 
 /**
  *
  * @author diegoprietotorres
  */
-public interface IUniversityServices extends CRUD<University, String>{
+public interface ISchoolServices extends CRUD<School, String>{
     
 }

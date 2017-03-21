@@ -1,8 +1,8 @@
 package com.tuprofe.api.logic.implementation;
 
-import com.tuprofe.api.entities.University;
-import com.tuprofe.api.logic.services.IUniversityServices;
-import com.tuprofe.api.persistance.repositories.IUniversityRepository;
+import com.tuprofe.api.entities.School;
+import com.tuprofe.api.logic.services.ISchoolServices;
+import com.tuprofe.api.persistance.repositories.ISchoolRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,36 +13,36 @@ import org.springframework.stereotype.Service;
  * @author diegoprietotorres
  */
 @Service
-@Qualifier("UniversityServices")
-public class UniversityServices implements IUniversityServices {
+@Qualifier("SchoolServices")
+public class SchoolServices implements ISchoolServices {
 
     @Autowired
-    @Qualifier("DynamoUniversityRepository")
-    private IUniversityRepository universityRepository;
+    @Qualifier("DynamoSchoolRepository")
+    private ISchoolRepository schoolRepository;
 
     @Override
-    public University create(University entity) {
+    public School create(School entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public University find(String id) {
+    public School find(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public University update(University entity) {
+    public School update(School entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(University entity) {
+    public void delete(School entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<University> finadAll() {
-        return universityRepository.findAll();
+    public List<School> finadAll() {
+        return schoolRepository.findAll();
     }
 
 }

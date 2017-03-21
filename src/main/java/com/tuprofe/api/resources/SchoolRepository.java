@@ -1,7 +1,7 @@
 package com.tuprofe.api.resources;
 
-import com.tuprofe.api.entities.University;
-import com.tuprofe.api.logic.services.IUniversityServices;
+import com.tuprofe.api.entities.School;
+import com.tuprofe.api.logic.services.ISchoolServices;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @author diegoprietotorres
  */
 @RestController
-@RequestMapping("/university")
-public class UniversityRepository {
+@RequestMapping("/school")
+public class SchoolRepository {
 
     @Autowired
-    @Qualifier("UniversityServices")
-    private IUniversityServices universityServices;
+    @Qualifier("SchoolServices")
+    private ISchoolServices SchoolServices;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<University> getAll() {
-        return universityServices.finadAll();
+    public List<School> getAll() {
+        return SchoolServices.finadAll();
     }
 }

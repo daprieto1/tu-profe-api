@@ -5,13 +5,13 @@
  */
 package com.tuprofe.api.persistance.repositories;
 
-import com.tuprofe.api.entities.University;
+import com.tuprofe.api.entities.School;
 import com.tuprofe.api.persistance.DAO;
 
 /**
  *
  * @author diegoprietotorres
  */
-public interface IUniversityRepository extends DAO<University, String> {
+public interface ISchoolRepository extends DAO<School, String> {
 
 }

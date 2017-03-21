@@ -15,14 +15,15 @@ import java.io.Serializable;
  *
  * @author diegoprietotorres
  */
-@DynamoDBTable(tableName = "university")
-public class University implements Serializable {
+@DynamoDBTable(tableName = "school")
+public class School implements Serializable {
 
     private String id;
     private String name;
     private String address;
+    private Integer type;
 
-    public University() {
+    public School() {
     }
 
     @DynamoDBHashKey(attributeName = "id")
@@ -51,6 +52,15 @@ public class University implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+    
+    @DynamoDBAttribute(attributeName = "type")
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
 }
