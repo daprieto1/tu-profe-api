@@ -31,7 +31,17 @@ public class CourseServices implements ICourseServices {
 
     @Override
     public Course find(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (id == null || "".equals(id)) {
+            throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
+        }
+
+        Course course = courseRepository.find(id);
+
+        if (course == null) {
+            throw new TuProfeAPIException(TuProfeAPIException.NOT_FIND_ENTITY);
+        }
+        
+        return course;
     }
 
     @Override

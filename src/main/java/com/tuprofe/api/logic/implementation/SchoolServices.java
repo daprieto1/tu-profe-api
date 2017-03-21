@@ -25,14 +25,26 @@ public class SchoolServices implements ISchoolServices {
     public School create(School school) {
         if(school == null){
             throw new TuProfeAPIException(TuProfeAPIException.NULL_PARAM);
-        }else{
-            schoolRepository.save(school);
         }
+        
+        School result = schoolRepository.save(school);
+        
+        return result;
     }
 
     @Override
     public School find(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (id == null || "".equals(id)) {
+            throw new TuProfeAPIException(TuProfeAPIException.EMPTY_PARAM);
+        }
+
+        School school = schoolRepository.find(id);
+
+        if (school == null) {
+            throw new TuProfeAPIException(TuProfeAPIException.NOT_FIND_ENTITY);
+        }
+
+        return school;
     }
 
     @Override
