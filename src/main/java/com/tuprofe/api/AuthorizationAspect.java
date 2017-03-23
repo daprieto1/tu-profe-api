@@ -38,7 +38,7 @@ public class AuthorizationAspect {
         if (!avoid.contains(joinPoint.getSignature().getName())) {
             String token = request.getHeader(SessionResource.AUTH_HEADER_TOKEN);
             if (token == null) {
-                throw new BadCredentialsException(TuProfeAPIException.BAD_ACCESS_TOKEN);
+                //throw new BadCredentialsException(TuProfeAPIException.BAD_ACCESS_TOKEN);
             }
         }
     }
