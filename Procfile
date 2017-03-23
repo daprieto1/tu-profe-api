@@ -1,1 +1,1 @@
-
+web: java $JAVA_OPTS -DSkipTests -Dserver.port=$PORT -jar target/*.jar
